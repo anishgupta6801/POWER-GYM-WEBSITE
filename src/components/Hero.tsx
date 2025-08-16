@@ -4,14 +4,25 @@ import { Play } from 'lucide-react';
 const Hero: React.FC = () => {
   return (
     <section id="home" className="relative h-screen flex items-center overflow-hidden">
-      {/* Background Image */}
+      {/* Background Video */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-black bg-opacity-70 z-10"></div>
-        <img 
-          src="/download.jpeg"
-          alt="Gym background" 
+        <div className="absolute inset-0 bg-black bg-opacity-50 z-10"></div>
+        <video 
+          autoPlay
+          muted
+          loop
+          playsInline
           className="w-full h-full object-cover"
-        />
+          poster="/pexels-photo-1552242.jpeg"
+        >
+          <source src="/Gym_Hero_Background_Video_Generation.mp4" type="video/mp4" />
+          {/* Fallback image if video doesn't load */}
+          <img 
+            src="/pexels-photo-1552242.jpeg"
+            alt="Gym background" 
+            className="w-full h-full object-cover"
+          />
+        </video>
       </div>
       
       {/* Content */}
