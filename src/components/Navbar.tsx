@@ -294,14 +294,16 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <div className="flex items-center">
             <div className="relative">
-              <div className="absolute -inset-1 bg-red-600 rounded-full blur-sm opacity-70"></div>
-              <Dumbbell className="relative text-white z-10" size={28} />
+              {/* <div className="absolute -inset-1 bg-red-600 rounded-full blur-sm opacity-70"></div> */}
+              {/* <Dumbbell className="relative text-white z-10" size={28} /> */}
             </div>
-            <div className="ml-3 relative">
+            <div className="ml-5 relative">
               <span className="text-white font-bold text-xl tracking-wider">
                 POWER<span className="text-red-600">GYM</span>
               </span>
-              <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-red-600 to-transparent"></div>
+              {/* All-sides glow effect */}
+              <div className="absolute -inset-1 bg-red-600/20 rounded-md blur-sm opacity-60"></div>
+              <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-red-800 to-transparent"></div>
             </div>
           </div>
 
@@ -309,12 +311,12 @@ const Navbar: React.FC = () => {
           <div className="hidden md:flex items-center">
             <div className="relative bg-black bg-opacity-40 backdrop-blur-sm rounded-full px-6 py-2 border border-red-900/30">
               <div className="flex space-x-1">
-                <NavLink href="#home" isActive={activeLink === 'home'}>Home</NavLink>
-                <NavLink href="#about" isActive={activeLink === 'about'}>About</NavLink>
-                <NavLink href="#classes" isActive={activeLink === 'classes'}>Classes</NavLink>
-                <NavLink href="#trainers" isActive={activeLink === 'trainers'}>Trainers</NavLink>
-                <NavLink href="#pricing" isActive={activeLink === 'pricing'}>Pricing</NavLink>
-                <NavLink href="#contact" isActive={activeLink === 'contact'}>Contact</NavLink>
+                <NavLink href="#home" isActive={activeLink === 'home'}>HOME</NavLink>
+                <NavLink href="#about" isActive={activeLink === 'about'}>ABOUT</NavLink>
+                <NavLink href="#classes" isActive={activeLink === 'classes'}>ClASSES</NavLink>
+                <NavLink href="#trainers" isActive={activeLink === 'trainers'}>TRAINERS</NavLink>
+                <NavLink href="#pricing" isActive={activeLink === 'pricing'}>PRICING</NavLink>
+                <NavLink href="#contact" isActive={activeLink === 'contact'}>CONTACT</NavLink>
               </div>
             </div>
           </div>
@@ -326,7 +328,7 @@ const Navbar: React.FC = () => {
               onClick={() => setShowMembershipForm(true)}
               className="relative group overflow-hidden bg-gradient-to-br from-red-600 to-red-800 text-white px-8 py-2.5 rounded-md font-medium transition-all duration-300 shadow-lg hover:shadow-red-600/30"
             >
-              <span className="relative z-10">Join Now</span>
+              <span className="relative z-10">JOIN NOW</span>
               <span className="absolute inset-0 bg-gradient-to-r from-red-700 to-red-900 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
               <span className="absolute top-0 left-0 w-full h-full bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
             </button>
@@ -389,16 +391,13 @@ const NavLink: React.FC<{ href: string, isActive: boolean, children: React.React
   return (
     <a
       href={href}
-      className={`relative px-4 py-2 font-medium transition-all duration-300 rounded-full ${
+      className={`relative px-4 py-2 font-medium transition-all duration-300 rounded-full group ${
         isActive
-          ? 'text-white bg-gradient-to-r from-red-700 to-red-900 shadow-md'
-          : 'text-gray-200 hover:text-white'
+          ? 'text-white bg-gradient-to-r from-red-700 to-red-900 shadow-md shadow-red-600/40'
+          : 'text-gray-200 hover:text-white hover:shadow-lg hover:shadow-red-600/50'
       }`}
     >
       <span className="relative z-10">{children}</span>
-      {!isActive && (
-        <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-red-600 group-hover:w-1/2 transition-all duration-300"></span>
-      )}
     </a>
   );
 };
@@ -410,8 +409,8 @@ const MobileNavLink: React.FC<{ href: string, onClick: () => void, isActive: boo
       onClick={onClick}
       className={`relative px-4 py-3 font-medium transition-all duration-300 rounded-md flex items-center ${
         isActive
-          ? 'text-white bg-gradient-to-r from-red-700 to-red-900 shadow-md'
-          : 'text-gray-200 hover:text-white hover:bg-red-900/20'
+          ? 'text-white bg-gradient-to-r from-red-700 to-red-900 shadow-md shadow-red-600/40'
+          : 'text-gray-200 hover:text-white hover:bg-red-900/20 hover:shadow-lg hover:shadow-red-600/50'
       }`}
     >
       {isActive && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1/2 bg-red-500 rounded-r-full"></span>}

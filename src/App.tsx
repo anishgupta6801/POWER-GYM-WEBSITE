@@ -11,7 +11,7 @@ import Footer from './components/Footer';
 
 function App() {
   useEffect(() => {
-    document.title = "PowerGym - Transform Your Body, Transform Your Life";
+    document.title = "POWER GYM";
   }, []);
 
   return (

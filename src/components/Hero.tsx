@@ -49,7 +49,7 @@ const Hero: React.FC = () => {
               ))}
             </div>
             <div className="ml-4">
-              <p className="text-white font-bold">1500+ <span className="text-red-500">Happy Members</span></p>
+              <p className="text-white font-bold">500+ <span className="text-red-500">Happy Members</span></p>
               <div className="flex text-yellow-400 text-sm">★★★★★</div>
             </div>
           </div>

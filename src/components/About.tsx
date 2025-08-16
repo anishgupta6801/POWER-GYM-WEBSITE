@@ -62,7 +62,7 @@ const About: React.FC = () => {
               className="rounded-lg w-full object-cover h-[500px]"
             />
             <div className="absolute -bottom-8 -right-8 bg-red-600 p-6 rounded-lg hidden md:block">
-              <div className="text-4xl font-bold text-white">10+</div>
+              <div className="text-4xl font-bold text-white">5+</div>
               <div className="text-white">Years of Experience</div>
             </div>
           </div>
