@@ -2,6 +2,16 @@ import React from 'react';
 import { Play } from 'lucide-react';
 
 const Hero: React.FC = () => {
+  const scrollToPricing = () => {
+    const pricingSection = document.getElementById('pricing');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   return (
     <section id="home" className="relative h-screen flex items-center overflow-hidden">
       {/* Background Video */}
@@ -38,7 +48,10 @@ const Hero: React.FC = () => {
           </p>
           
           <div className="flex flex-wrap gap-4">
-            <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-md font-bold text-lg transition duration-300">
+            <button 
+              onClick={scrollToPricing}
+              className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-md font-bold text-lg transition duration-300"
+            >
               GET STARTED
             </button>
             <button className="border-2 border-white text-white hover:bg-white hover:text-black px-8 py-3 rounded-md font-bold text-lg transition duration-300 flex items-center">
