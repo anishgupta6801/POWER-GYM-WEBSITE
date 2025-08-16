@@ -1,6 +1,293 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Dumbbell, ChevronDown, User, Mail, Phone, Calendar, CheckCircle } from 'lucide-react';
 
+// Free Trial Form Modal Component
+interface FreeTrialFormProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const FreeTrialForm: React.FC<FreeTrialFormProps> = ({ isOpen, onClose }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    startDate: '',
+    timeSlot: 'morning',
+    interests: [] as string[],
+    emergencyContact: '',
+    message: ''
+  });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleInterestChange = (interest: string) => {
+    setFormData(prev => ({
+      ...prev,
+      interests: prev.interests.includes(interest)
+        ? prev.interests.filter(i => i !== interest)
+        : [...prev.interests, interest]
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Free Trial booking:', formData);
+    setIsSubmitted(true);
+  };
+
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      startDate: '',
+      timeSlot: 'morning',
+      interests: [],
+      emergencyContact: '',
+      message: ''
+    });
+    setIsSubmitted(false);
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="relative bg-gradient-to-b from-gray-900 to-black rounded-lg shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+          aria-label="Close free trial form"
+          title="Close"
+        >
+          <X size={24} />
+        </button>
+
+        <div className="p-8">
+          {!isSubmitted ? (
+            <>
+              <div className="text-center mb-6">
+                <h2 className="text-2xl font-bold text-white mb-2">
+                  Book Your <span className="text-red-600">2-Day Free Trial</span>
+                </h2>
+                <p className="text-gray-300">
+                  Experience PowerGym with full access for 2 days, completely free!
+                </p>
+                <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-3 mt-4">
+                  <p className="text-red-400 text-sm font-medium">
+                    ✓ Full gym access • ✓ Equipment usage • ✓ Group classes • ✓ No commitment
+                  </p>
+                </div>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="trialName" className="block text-gray-300 mb-2 flex items-center">
+                    <User size={16} className="mr-2 text-red-500" />
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    id="trialName"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
+                    placeholder="John Doe"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="trialEmail" className="block text-gray-300 mb-2 flex items-center">
+                    <Mail size={16} className="mr-2 text-red-500" />
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="trialEmail"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
+                    placeholder="john@example.com"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="trialPhone" className="block text-gray-300 mb-2 flex items-center">
+                    <Phone size={16} className="mr-2 text-red-500" />
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="trialPhone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
+                    placeholder="(123) 456-7890"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="startDate" className="block text-gray-300 mb-2 flex items-center">
+                    <Calendar size={16} className="mr-2 text-red-500" />
+                    Preferred Start Date
+                  </label>
+                  <input
+                    type="date"
+                    id="startDate"
+                    name="startDate"
+                    value={formData.startDate}
+                    onChange={handleChange}
+                    required
+                    min={new Date().toISOString().split('T')[0]}
+                    className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="timeSlot" className="block text-gray-300 mb-2">
+                    Preferred Time Slot
+                  </label>
+                  <select
+                    id="timeSlot"
+                    name="timeSlot"
+                    value={formData.timeSlot}
+                    onChange={handleChange}
+                    className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
+                  >
+                    <option value="morning">Morning (6:00 AM - 12:00 PM)</option>
+                    <option value="afternoon">Afternoon (12:00 PM - 6:00 PM)</option>
+                    <option value="evening">Evening (6:00 PM - 10:00 PM)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-gray-300 mb-3">
+                    What interests you most? (Select all that apply)
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {['Weight Training', 'Cardio', 'Group Classes', 'Personal Training', 'Yoga', 'CrossFit'].map(interest => (
+                      <label key={interest} className="flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={formData.interests.includes(interest)}
+                          onChange={() => handleInterestChange(interest)}
+                          className="sr-only"
+                        />
+                        <div className={`w-4 h-4 rounded border-2 mr-2 flex items-center justify-center transition-colors ${
+                          formData.interests.includes(interest) 
+                            ? 'bg-red-600 border-red-600' 
+                            : 'border-gray-600'
+                        }`}>
+                          {formData.interests.includes(interest) && (
+                            <CheckCircle size={12} className="text-white" />
+                          )}
+                        </div>
+                        <span className="text-gray-300 text-sm">{interest}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="emergencyContact" className="block text-gray-300 mb-2">
+                    Emergency Contact Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="emergencyContact"
+                    name="emergencyContact"
+                    value={formData.emergencyContact}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
+                    placeholder="Emergency contact phone"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="trialMessage" className="block text-gray-300 mb-2">
+                    Additional Notes (Optional)
+                  </label>
+                  <textarea
+                    id="trialMessage"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={3}
+                    className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
+                    placeholder="Any health conditions, fitness goals, or questions..."
+                  ></textarea>
+                </div>
+
+                <div className="bg-gray-800/50 rounded-lg p-4 text-xs text-gray-400">
+                  <p className="mb-2">By booking this free trial, you agree to:</p>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>Complete a brief safety orientation</li>
+                    <li>Follow all gym rules and regulations</li>
+                    <li>Be 18+ or have parent/guardian permission</li>
+                  </ul>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold py-4 px-8 rounded-md transition duration-300"
+                >
+                  Book My 2-Day Free Trial
+                </button>
+              </form>
+            </>
+          ) : (
+            <div className="text-center py-8">
+              <div className="flex justify-center mb-6">
+                <div className="w-16 h-16 rounded-full bg-green-600 flex items-center justify-center">
+                  <CheckCircle size={32} className="text-white" />
+                </div>
+              </div>
+              <h2 className="text-2xl font-bold text-white mb-4">
+                Free Trial Booked Successfully!
+              </h2>
+              <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4 mb-6">
+                <p className="text-green-400 font-medium mb-2">Your 2-Day Free Trial Details:</p>
+                <div className="text-gray-300 text-sm space-y-1">
+                  <p><strong>Start Date:</strong> {new Date(formData.startDate).toLocaleDateString()}</p>
+                  <p><strong>Duration:</strong> 2 consecutive days</p>
+                  <p><strong>Time Slot:</strong> {formData.timeSlot}</p>
+                </div>
+              </div>
+              <p className="text-gray-300 mb-8">
+                We'll send you a confirmation email with your trial pass and orientation details. 
+                Please arrive 15 minutes early on your first day for a quick facility tour.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  resetForm();
+                  onClose();
+                }}
+                className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold py-3 px-8 rounded-md transition duration-300"
+              >
+                Close
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Membership Form Modal Component
 interface MembershipFormProps {
   isOpen: boolean;
@@ -257,6 +544,7 @@ const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('home');
   const [showMembershipForm, setShowMembershipForm] = useState(false);
+  const [showFreeTrialForm, setShowFreeTrialForm] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -321,14 +609,14 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          {/* Join Now Button */}
+          {/* Book Free Trial Button */}
           <div className="hidden md:block">
             <button
               type="button"
-              onClick={() => setShowMembershipForm(true)}
+              onClick={() => setShowFreeTrialForm(true)}
               className="relative group overflow-hidden bg-gradient-to-br from-red-600 to-red-800 text-white px-8 py-2.5 rounded-md font-medium transition-all duration-300 shadow-lg hover:shadow-red-600/30"
             >
-              <span className="relative z-10">JOIN NOW</span>
+              <span className="relative z-10">BOOK FREE TRIAL</span>
               <span className="absolute inset-0 bg-gradient-to-r from-red-700 to-red-900 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
               <span className="absolute top-0 left-0 w-full h-full bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
             </button>
@@ -382,6 +670,12 @@ const Navbar: React.FC = () => {
       <MembershipForm
         isOpen={showMembershipForm}
         onClose={() => setShowMembershipForm(false)}
+      />
+
+      {/* Free Trial Form Modal */}
+      <FreeTrialForm
+        isOpen={showFreeTrialForm}
+        onClose={() => setShowFreeTrialForm(false)}
       />
     </nav>
   );
