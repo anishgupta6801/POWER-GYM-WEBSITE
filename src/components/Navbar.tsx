@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Dumbbell, ChevronDown, User, Mail, Phone, Calendar, CheckCircle } from 'lucide-react';
+import { Menu, X, ChevronDown, User, Mail, Phone, Calendar, CheckCircle } from 'lucide-react';
 
 // Free Trial Form Modal Component
 interface FreeTrialFormProps {
@@ -13,7 +13,7 @@ const FreeTrialForm: React.FC<FreeTrialFormProps> = ({ isOpen, onClose }) => {
     email: '',
     phone: '',
     startDate: '',
-    timeSlot: 'morning',
+    timeSlot: '',
     interests: [] as string[],
     emergencyContact: '',
     message: ''
@@ -46,7 +46,7 @@ const FreeTrialForm: React.FC<FreeTrialFormProps> = ({ isOpen, onClose }) => {
       email: '',
       phone: '',
       startDate: '',
-      timeSlot: 'morning',
+      timeSlot: '',
       interests: [],
       emergencyContact: '',
       message: ''
@@ -58,195 +58,197 @@ const FreeTrialForm: React.FC<FreeTrialFormProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="relative bg-gradient-to-b from-gray-900 to-black rounded-lg shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+      <div className="relative bg-gradient-to-br from-gray-900 to-black rounded-3xl shadow-2xl max-w-5xl w-full max-h-[85vh] overflow-hidden border border-gray-700/50">
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10"
           aria-label="Close free trial form"
           title="Close"
         >
           <X size={24} />
         </button>
 
-        <div className="p-8">
+        <div className="p-6">
           {!isSubmitted ? (
             <>
-              <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold text-white mb-2">
-                  Book Your <span className="text-red-600">2-Day Free Trial</span>
+              {/* Compact Header */}
+              <div className="text-center mb-4">
+                <h2 className="text-2xl font-bold text-white mb-1">
+                  BOOK YOUR <span className="text-red-600">2-DAY FREE TRIAL</span>
                 </h2>
-                <p className="text-gray-300">
-                  Experience PowerGym with full access for 2 days, completely free!
+                <p className="text-gray-300 text-sm">
+                  Experience PowerGym with full access - No commitment required!
                 </p>
-                <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-3 mt-4">
-                  <p className="text-red-400 text-sm font-medium">
-                    ✓ Full gym access • ✓ Equipment usage • ✓ Group classes • ✓ No commitment
-                  </p>
-                </div>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="trialName" className="block text-gray-300 mb-2 flex items-center">
-                    <User size={16} className="mr-2 text-red-500" />
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    id="trialName"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
-                    placeholder="John Doe"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="trialEmail" className="block text-gray-300 mb-2 flex items-center">
-                    <Mail size={16} className="mr-2 text-red-500" />
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="trialEmail"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
-                    placeholder="john@example.com"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="trialPhone" className="block text-gray-300 mb-2 flex items-center">
-                    <Phone size={16} className="mr-2 text-red-500" />
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="trialPhone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
-                    placeholder="(123) 456-7890"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="startDate" className="block text-gray-300 mb-2 flex items-center">
-                    <Calendar size={16} className="mr-2 text-red-500" />
-                    Preferred Start Date
-                  </label>
-                  <input
-                    type="date"
-                    id="startDate"
-                    name="startDate"
-                    value={formData.startDate}
-                    onChange={handleChange}
-                    required
-                    min={new Date().toISOString().split('T')[0]}
-                    className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="timeSlot" className="block text-gray-300 mb-2">
-                    Preferred Time Slot
-                  </label>
-                  <select
-                    id="timeSlot"
-                    name="timeSlot"
-                    value={formData.timeSlot}
-                    onChange={handleChange}
-                    className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
-                  >
-                    <option value="morning">Morning (6:00 AM - 12:00 PM)</option>
-                    <option value="afternoon">Afternoon (12:00 PM - 6:00 PM)</option>
-                    <option value="evening">Evening (6:00 PM - 10:00 PM)</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-gray-300 mb-3">
-                    What interests you most? (Select all that apply)
-                  </label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {['Weight Training', 'Cardio', 'Group Classes', 'Personal Training', 'Yoga', 'CrossFit'].map(interest => (
-                      <label key={interest} className="flex items-center cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={formData.interests.includes(interest)}
-                          onChange={() => handleInterestChange(interest)}
-                          className="sr-only"
-                        />
-                        <div className={`w-4 h-4 rounded border-2 mr-2 flex items-center justify-center transition-colors ${
-                          formData.interests.includes(interest) 
-                            ? 'bg-red-600 border-red-600' 
-                            : 'border-gray-600'
-                        }`}>
-                          {formData.interests.includes(interest) && (
-                            <CheckCircle size={12} className="text-white" />
-                          )}
-                        </div>
-                        <span className="text-gray-300 text-sm">{interest}</span>
+              {/* Rectangle Form Container with Curved Edges */}
+              <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-600/40 p-6 shadow-xl">
+                <form onSubmit={handleSubmit}>
+                  {/* 4x2 Compact Grid Layout */}
+                  <div className="grid grid-cols-4 gap-4 mb-4">
+                    {/* Row 1 */}
+                    <div>
+                      <label htmlFor="trialName" className="text-gray-300 mb-1 flex items-center text-sm">
+                        <User size={14} className="mr-1 text-red-500" />
+                        Name
                       </label>
-                    ))}
+                      <input
+                        type="text"
+                        id="trialName"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-gray-700/50 text-white border border-gray-600 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200"
+                        placeholder="Your name"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="trialEmail" className="text-gray-300 mb-1 flex items-center text-sm">
+                        <Mail size={14} className="mr-1 text-red-500" />
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        id="trialEmail"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-gray-700/50 text-white border border-gray-600 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200"
+                        placeholder="your@email.com"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="trialPhone" className="text-gray-300 mb-1 flex items-center text-sm">
+                        <Phone size={14} className="mr-1 text-red-500" />
+                        Phone
+                      </label>
+                      <input
+                        type="tel"
+                        id="trialPhone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-gray-700/50 text-white border border-gray-600 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200"
+                        placeholder="(123) 456-7890"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="startDate" className="text-gray-300 mb-1 flex items-center text-sm">
+                        <Calendar size={14} className="mr-1 text-red-500" />
+                        Start Date
+                      </label>
+                      <input
+                        type="date"
+                        id="startDate"
+                        name="startDate"
+                        value={formData.startDate}
+                        onChange={handleChange}
+                        required
+                        min={new Date().toISOString().split('T')[0]}
+                        className="w-full bg-gray-700/50 text-white border border-gray-600 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200"
+                      />
+                    </div>
+
+                    {/* Row 2 */}
+                    <div>
+                      <label htmlFor="timeSlot" className="block text-gray-300 mb-1 text-sm">
+                        Time Slot
+                      </label>
+                      <select
+                        id="timeSlot"
+                        name="timeSlot"
+                        value={formData.timeSlot}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-gray-700/50 text-white border border-gray-600 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200"
+                      >
+                        <option value="" disabled hidden>Select Time</option>
+                        <option value="morning">Morning (6:00 AM - 9:00 AM)</option>
+                        <option value="evening">Evening (5:00 PM - 9:00 PM)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="emergencyContact" className="block text-gray-300 mb-1 text-sm">
+                        Emergency Contact
+                      </label>
+                      <input
+                        type="tel"
+                        id="emergencyContact"
+                        name="emergencyContact"
+                        value={formData.emergencyContact}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-gray-700/50 text-white border border-gray-600 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200"
+                        placeholder="Emergency phone"
+                      />
+                    </div>
+                    <div className="col-span-2">
+                      <label className="block text-gray-300 mb-1 text-sm">
+                        Interests (Select multiple)
+                      </label>
+                      <div className="grid grid-cols-3 gap-2">
+                        {['Weights', 'Cardio', 'Classes', 'Training', 'Yoga', 'CrossFit'].map(interest => (
+                          <label key={interest} className="flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={formData.interests.includes(interest)}
+                              onChange={() => handleInterestChange(interest)}
+                              className="sr-only"
+                            />
+                            <div className={`w-3 h-3 rounded border mr-1.5 flex items-center justify-center transition-colors ${
+                              formData.interests.includes(interest) 
+                                ? 'bg-red-600 border-red-600' 
+                                : 'border-gray-500'
+                            }`}>
+                              {formData.interests.includes(interest) && (
+                                <CheckCircle size={8} className="text-white" />
+                              )}
+                            </div>
+                            <span className="text-gray-300 text-xs">{interest}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </div>
 
-                <div>
-                  <label htmlFor="emergencyContact" className="block text-gray-300 mb-2">
-                    Emergency Contact Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="emergencyContact"
-                    name="emergencyContact"
-                    value={formData.emergencyContact}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
-                    placeholder="Emergency contact phone"
-                  />
-                </div>
+                  {/* Additional Notes - Full Width */}
+                  <div className="mb-4">
+                    <label htmlFor="trialMessage" className="block text-gray-300 mb-1 text-sm">
+                      Additional Notes (Optional)
+                    </label>
+                    <textarea
+                      id="trialMessage"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={2}
+                      className="w-full bg-gray-700/50 text-white border border-gray-600 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200 resize-none"
+                      placeholder="Health conditions, fitness goals, or questions..."
+                    ></textarea>
+                  </div>
 
-                <div>
-                  <label htmlFor="trialMessage" className="block text-gray-300 mb-2">
-                    Additional Notes (Optional)
-                  </label>
-                  <textarea
-                    id="trialMessage"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={3}
-                    className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
-                    placeholder="Any health conditions, fitness goals, or questions..."
-                  ></textarea>
-                </div>
-
-                <div className="bg-gray-800/50 rounded-lg p-4 text-xs text-gray-400">
-                  <p className="mb-2">By booking this free trial, you agree to:</p>
-                  <ul className="list-disc list-inside space-y-1">
-                    <li>Complete a brief safety orientation</li>
-                    <li>Follow all gym rules and regulations</li>
-                    <li>Be 18+ or have parent/guardian permission</li>
-                  </ul>
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold py-4 px-8 rounded-md transition duration-300"
-                >
-                  Book My 2-Day Free Trial
-                </button>
-              </form>
+                  {/* Footer with Agreement and Submit */}
+                  <div className="flex items-center justify-between">
+                    <div className="text-xs text-gray-400 flex items-center">
+                      <div className="flex items-center space-x-4">
+                        <span><span className="text-red-400">✓</span> Safety orientation</span>
+                        <span><span className="text-red-400">✓</span> Follow gym rules</span>
+                        <span><span className="text-red-400">✓</span> 18+ required</span>
+                      </div>
+                    </div>
+                    <button
+                      type="submit"
+                      className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold py-3 px-8 rounded-xl transition duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                    >
+                      BOOK FREE TRIAL
+                    </button>
+                  </div>
+                </form>
+              </div>
             </>
           ) : (
             <div className="text-center py-8">
@@ -256,10 +258,10 @@ const FreeTrialForm: React.FC<FreeTrialFormProps> = ({ isOpen, onClose }) => {
                 </div>
               </div>
               <h2 className="text-2xl font-bold text-white mb-4">
-                Free Trial Booked Successfully!
+                FREE TRIAL BOOKED SUCCESSFULLY!
               </h2>
               <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4 mb-6">
-                <p className="text-green-400 font-medium mb-2">Your 2-Day Free Trial Details:</p>
+                <p className="text-green-400 font-medium mb-2">YOUR 2- DAY FREE TRIAL DETAILS:</p>
                 <div className="text-gray-300 text-sm space-y-1">
                   <p><strong>Start Date:</strong> {new Date(formData.startDate).toLocaleDateString()}</p>
                   <p><strong>Duration:</strong> 2 consecutive days</p>
@@ -278,7 +280,7 @@ const FreeTrialForm: React.FC<FreeTrialFormProps> = ({ isOpen, onClose }) => {
                 }}
                 className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold py-3 px-8 rounded-md transition duration-300"
               >
-                Close
+                CLOSE
               </button>
             </div>
           )}
@@ -301,88 +303,79 @@ const MembershipForm: React.FC<MembershipFormProps> = ({ isOpen, onClose }) => {
     phone: '',
     dob: '',
     plan: 'basic',
+    gender: '',
+    experience: '',
+    goals: '',
+    referral: '',
     message: ''
   });
-  const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  // Optimized change handler with useCallback to prevent re-renders
+  const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-  };
+  }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = React.useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    // In a real application, you would send this data to a server
     console.log('Form submitted:', formData);
     setIsSubmitted(true);
-  };
+  }, [formData]);
 
-  const nextStep = () => {
-    setStep(prev => prev + 1);
-  };
-
-  const prevStep = () => {
-    setStep(prev => prev - 1);
-  };
-
-  const resetForm = () => {
+  const resetForm = React.useCallback(() => {
     setFormData({
       name: '',
       email: '',
       phone: '',
       dob: '',
       plan: 'basic',
+      gender: '',
+      experience: '',
+      goals: '',
+      referral: '',
       message: ''
     });
-    setStep(1);
     setIsSubmitted(false);
-  };
+  }, []);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="relative bg-gradient-to-b from-gray-900 to-black rounded-lg shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="relative bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-2xl w-full max-w-4xl aspect-[3/2] max-h-[85vh] overflow-hidden">
+        {/* Close Button */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors duration-200 z-10"
           aria-label="Close membership form"
           title="Close"
         >
           <X size={24} />
         </button>
 
-        <div className="p-8">
-          {!isSubmitted ? (
-            <>
-              <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold text-white mb-2">
-                  Join <span className="text-red-600">POWERGYM</span>
-                </h2>
-                <p className="text-gray-300">
-                  {step === 1 ? 'Fill in your details to get started' : 'Choose your membership plan'}
-                </p>
-              </div>
-
-              <div className="flex justify-center mb-8">
-                <div className="flex items-center">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-red-600' : 'bg-gray-700'}`}>
-                    <span className="text-white font-bold">1</span>
-                  </div>
-                  <div className={`w-12 h-1 ${step >= 2 ? 'bg-red-600' : 'bg-gray-700'}`}></div>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-red-600' : 'bg-gray-700'}`}>
-                    <span className="text-white font-bold">2</span>
-                  </div>
+        <div className="h-full flex">
+          {/* Left Side - Content */}
+          <div className="flex-1 p-8 overflow-y-auto">
+            {!isSubmitted ? (
+              <>
+                {/* Header */}
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-2">
+                    Join <span className="text-red-600">POWERGYM</span>
+                  </h2>
+                  <p className="text-gray-300">
+                    Fill in your details and choose your membership plan
+                  </p>
                 </div>
-              </div>
 
-              <form onSubmit={handleSubmit}>
-                {step === 1 && (
-                  <div className="space-y-4">
+                {/* Single Grid Form */}
+                <form onSubmit={handleSubmit}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                    {/* Row 1 */}
                     <div>
-                      <label htmlFor="name" className="block text-gray-300 mb-2 flex items-center">
+                      <label htmlFor="name" className="flex items-center text-gray-300 mb-2">
                         <User size={16} className="mr-2 text-red-500" />
                         Full Name
                       </label>
@@ -393,12 +386,12 @@ const MembershipForm: React.FC<MembershipFormProps> = ({ isOpen, onClose }) => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
+                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:border-red-600 transition-colors duration-200"
                         placeholder="John Doe"
                       />
                     </div>
                     <div>
-                      <label htmlFor="email" className="block text-gray-300 mb-2 flex items-center">
+                      <label htmlFor="email" className="flex items-center text-gray-300 mb-2">
                         <Mail size={16} className="mr-2 text-red-500" />
                         Email Address
                       </label>
@@ -409,12 +402,12 @@ const MembershipForm: React.FC<MembershipFormProps> = ({ isOpen, onClose }) => {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
+                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:border-red-600 transition-colors duration-200"
                         placeholder="john@example.com"
                       />
                     </div>
                     <div>
-                      <label htmlFor="phone" className="block text-gray-300 mb-2 flex items-center">
+                      <label htmlFor="phone" className="flex items-center text-gray-300 mb-2">
                         <Phone size={16} className="mr-2 text-red-500" />
                         Phone Number
                       </label>
@@ -425,12 +418,14 @@ const MembershipForm: React.FC<MembershipFormProps> = ({ isOpen, onClose }) => {
                         value={formData.phone}
                         onChange={handleChange}
                         required
-                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
+                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:border-red-600 transition-colors duration-200"
                         placeholder="(123) 456-7890"
                       />
                     </div>
+
+                    {/* Row 2 */}
                     <div>
-                      <label htmlFor="dob" className="block text-gray-300 mb-2 flex items-center">
+                      <label htmlFor="dob" className="flex items-center text-gray-300 mb-2">
                         <Calendar size={16} className="mr-2 text-red-500" />
                         Date of Birth
                       </label>
@@ -441,26 +436,12 @@ const MembershipForm: React.FC<MembershipFormProps> = ({ isOpen, onClose }) => {
                         value={formData.dob}
                         onChange={handleChange}
                         required
-                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
+                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:border-red-600 transition-colors duration-200"
                       />
                     </div>
-                    <div className="pt-4">
-                      <button
-                        type="button"
-                        onClick={nextStep}
-                        className="w-full bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold py-3 px-8 rounded-md transition duration-300"
-                      >
-                        Next Step
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {step === 2 && (
-                  <div className="space-y-4">
                     <div>
                       <label htmlFor="plan" className="block text-gray-300 mb-2">
-                        Select Membership Plan
+                        Membership Plan
                       </label>
                       <select
                         id="plan"
@@ -468,14 +449,90 @@ const MembershipForm: React.FC<MembershipFormProps> = ({ isOpen, onClose }) => {
                         value={formData.plan}
                         onChange={handleChange}
                         required
-                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
+                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:border-red-600 transition-colors duration-200"
                       >
-                        <option value="basic">Basic Plan - $29.99/month</option>
-                        <option value="premium">Premium Plan - $49.99/month</option>
-                        <option value="elite">Elite Plan - $79.99/month</option>
+                        <option value="basic">Basic - $29.99/month</option>
+                        <option value="premium">Premium - $49.99/month</option>
+                        <option value="elite">Elite - $79.99/month</option>
                       </select>
                     </div>
                     <div>
+                      <label htmlFor="gender" className="block text-gray-300 mb-2">
+                        Gender
+                      </label>
+                      <select
+                        id="gender"
+                        name="gender"
+                        value={formData.gender || ''}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:border-red-600 transition-colors duration-200"
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+
+                    {/* Row 3 */}
+                    <div>
+                      <label htmlFor="experience" className="block text-gray-300 mb-2">
+                        Fitness Experience
+                      </label>
+                      <select
+                        id="experience"
+                        name="experience"
+                        value={formData.experience || ''}
+                        onChange={handleChange}
+                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:border-red-600 transition-colors duration-200"
+                      >
+                        <option value="">Select Experience</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="goals" className="block text-gray-300 mb-2">
+                        Primary Goal
+                      </label>
+                      <select
+                        id="goals"
+                        name="goals"
+                        value={formData.goals || ''}
+                        onChange={handleChange}
+                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:border-red-600 transition-colors duration-200"
+                      >
+                        <option value="">Select Goal</option>
+                        <option value="weight_loss">Weight Loss</option>
+                        <option value="muscle_gain">Muscle Gain</option>
+                        <option value="fitness">General Fitness</option>
+                        <option value="strength">Strength Training</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="referral" className="block text-gray-300 mb-2">
+                        How did you hear about us?
+                      </label>
+                      <select
+                        id="referral"
+                        name="referral"
+                        value={formData.referral || ''}
+                        onChange={handleChange}
+                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:border-red-600 transition-colors duration-200"
+                      >
+                        <option value="">Select Option</option>
+                        <option value="friend">Friend/Family</option>
+                        <option value="social">Social Media</option>
+                        <option value="search">Google Search</option>
+                        <option value="advertisement">Advertisement</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+
+                    {/* Row 4 - Message spans all columns */}
+                    <div className="col-span-1 md:col-span-2 lg:col-span-3">
                       <label htmlFor="message" className="block text-gray-300 mb-2">
                         Additional Information (Optional)
                       </label>
@@ -484,55 +541,66 @@ const MembershipForm: React.FC<MembershipFormProps> = ({ isOpen, onClose }) => {
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
-                        rows={4}
-                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:border-red-600 transition-colors"
-                        placeholder="Tell us about your fitness goals or any questions you have..."
+                        rows={3}
+                        className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:border-red-600 transition-colors duration-200 resize-none"
+                        placeholder="Tell us about your fitness goals, health conditions, or any questions..."
                       ></textarea>
                     </div>
-                    <div className="flex space-x-4 pt-4">
-                      <button
-                        type="button"
-                        onClick={prevStep}
-                        className="w-1/2 bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-md transition duration-300"
-                      >
-                        Back
-                      </button>
-                      <button
-                        type="submit"
-                        className="w-1/2 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold py-3 px-8 rounded-md transition duration-300"
-                      >
-                        Submit
-                      </button>
-                    </div>
                   </div>
-                )}
-              </form>
-            </>
-          ) : (
-            <div className="text-center py-8">
-              <div className="flex justify-center mb-6">
-                <div className="w-16 h-16 rounded-full bg-green-600 flex items-center justify-center">
-                  <CheckCircle size={32} className="text-white" />
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200"
+                  >
+                    Join PowerGym Now
+                  </button>
+                </form>
+              </>
+            ) : (
+              <div className="text-center py-8">
+                <div className="flex justify-center mb-6">
+                  <div className="w-16 h-16 rounded-full bg-green-600 flex items-center justify-center">
+                    <CheckCircle size={32} className="text-white" />
+                  </div>
                 </div>
+                <h2 className="text-3xl font-bold text-white mb-4">
+                  Thank You for Joining!
+                </h2>
+                <p className="text-gray-300 mb-8">
+                  Your membership application has been received. We'll contact you shortly to confirm your details and get you started on your fitness journey.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    resetForm();
+                    onClose();
+                  }}
+                  className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200"
+                >
+                  Close
+                </button>
               </div>
-              <h2 className="text-2xl font-bold text-white mb-4">
-                Thank You for Joining!
-              </h2>
-              <p className="text-gray-300 mb-8">
-                Your membership application has been received. We'll contact you shortly to confirm your details and get you started on your fitness journey.
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  resetForm();
-                  onClose();
-                }}
-                className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold py-3 px-8 rounded-md transition duration-300"
-              >
-                Close
-              </button>
+            )}
+          </div>
+
+          {/* Right Side - Visual/Branding */}
+          <div className="hidden md:flex flex-1 bg-gradient-to-br from-red-900/20 to-red-600/10 p-8 items-center justify-center">
+            <div className="text-center">
+              <div className="text-6xl font-bold text-red-600 mb-4">
+                POWER<span className="text-white">GYM</span>
+              </div>
+              <div className="text-gray-300 space-y-2">
+                <p>🏋️ Modern Equipment</p>
+                <p>⏰ 24/7 Access</p>
+                <p>👨‍🏫 Expert Trainers</p>
+                <p>🤝 Community Support</p>
+              </div>
+              <div className="mt-8 text-sm text-gray-400">
+                Join 1000+ members who chose PowerGym
+              </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
@@ -553,8 +621,9 @@ const Navbar: React.FC = () => {
       // Update active link based on scroll position
       const sections = document.querySelectorAll('section[id]');
       sections.forEach(section => {
-        const sectionTop = section.offsetTop - 100;
-        const sectionHeight = section.offsetHeight;
+        const htmlSection = section as HTMLElement;
+        const sectionTop = htmlSection.offsetTop - 100;
+        const sectionHeight = htmlSection.offsetHeight;
         const sectionId = section.getAttribute('id') || '';
 
         if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
