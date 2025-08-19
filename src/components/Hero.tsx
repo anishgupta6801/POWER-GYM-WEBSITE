@@ -75,15 +75,7 @@ const Hero: React.FC = () => {
           
           <div className="flex items-center mt-12">
             <div className="flex -space-x-2">
-              {[1, 2, 3, 4].map((item) => (
-                <div key={item} className="w-10 h-10 rounded-full border-2 border-white overflow-hidden">
-                  <img 
-                    src={`https://images.pexels.com/photos/11${3160+item}/pexels-photo-11${3160+item}.jpeg`}
-                    alt="Member" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
+             
             </div>
             <div className="ml-4">
               <p className="text-white font-bold">500+ <span className="text-red-500">HAPPY MEMBERS</span></p>

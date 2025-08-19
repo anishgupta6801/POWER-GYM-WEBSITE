@@ -13,8 +13,8 @@ interface ClassType {
 const classData: ClassType[] = [
   {
     id: 1,
-    title: "Strength Training",
-    category: "Strength",
+    title: "STRENGTH TRAINING",
+    category: "STRENGTH",
     trainer: "John Miller",
     image: "https://images.pexels.com/photos/4164761/pexels-photo-4164761.jpeg",
     schedule: "Mon, Wed, Fri • 8:00 AM",
@@ -22,8 +22,8 @@ const classData: ClassType[] = [
   },
   {
     id: 2,
-    title: "HIIT Workout",
-    category: "Cardio",
+    title: "HIIT WORKOUT",
+    category: "CARDIO",
     trainer: "Sarah Johnson",
     image: "https://images.pexels.com/photos/6456300/pexels-photo-6456300.jpeg",
     schedule: "Tue, Thu • 7:00 PM",
@@ -31,8 +31,8 @@ const classData: ClassType[] = [
   },
   {
     id: 3,
-    title: "Yoga Flow",
-    category: "Mind & Body",
+    title: "YOGA FLOW",
+    category: "MIND & BODY",
     trainer: "Emma Davis",
     image: "https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg",
     schedule: "Mon, Wed, Fri • 6:00 PM",
@@ -40,8 +40,8 @@ const classData: ClassType[] = [
   },
   {
     id: 4,
-    title: "CrossFit",
-    category: "Strength",
+    title: "CROSSFIT",
+    category: "STRENGTH",
     trainer: "Mike Wilson",
     image: "https://images.pexels.com/photos/2204196/pexels-photo-2204196.jpeg",
     schedule: "Tue, Thu, Sat • 9:00 AM",
@@ -49,8 +49,8 @@ const classData: ClassType[] = [
   },
   {
     id: 5,
-    title: "Spinning",
-    category: "Cardio",
+    title: "SPINNING",
+    category: "CARDIO",
     trainer: "Lisa Thompson",
     image: "https://images.pexels.com/photos/4429141/pexels-photo-4429141.jpeg",
     schedule: "Mon, Wed, Fri • 5:30 PM",
@@ -58,8 +58,8 @@ const classData: ClassType[] = [
   },
   {
     id: 6,
-    title: "Pilates",
-    category: "Mind & Body",
+    title: "PILATES",
+    category: "MIND & BODY",
     trainer: "Amanda Clark",
     image: "https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg",
     schedule: "Tue, Thu • 10:00 AM",
@@ -68,11 +68,11 @@ const classData: ClassType[] = [
 ];
 
 const Classes: React.FC = () => {
-  const [filter, setFilter] = useState<string>('All');
+  const [filter, setFilter] = useState<string>('ALL');
   
-  const categories = ['All', 'Strength', 'Cardio', 'Mind & Body'];
+  const categories = ['ALL', 'STRENGTH', 'CARDIO', 'MIND & BODY'];
   
-  const filteredClasses = filter === 'All' 
+  const filteredClasses = filter === 'ALL' 
     ? classData 
     : classData.filter(c => c.category === filter);
 
@@ -80,7 +80,7 @@ const Classes: React.FC = () => {
     <section id="classes" className="py-20 bg-black">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">OUR <span className="text-red-600">CLASSES</span></h2>
+          <h2 className="text-5xl md:text-5xl font-bold text-white mb-4">OUR <span className="text-red-600">CLASSES</span></h2>
           <div className="w-20 h-1 bg-red-600 mx-auto mb-8"></div>
           <p className="text-gray-300 max-w-3xl mx-auto">
             Join our diverse range of classes led by expert instructors designed to help you achieve your fitness goals, no matter your experience level.
@@ -156,11 +156,12 @@ const Classes: React.FC = () => {
           ))}
         </div>
         
-        <div className="text-center mt-12">
+        {/* <div className="text-center mt-12">
           <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-md font-bold text-lg transition duration-300">
             VIEW ALL CLASSES
           </button>
-        </div>
+        </div> */}
+
       </div>
     </section>
   );

@@ -24,7 +24,7 @@ const About: React.FC = () => {
     <section id="about" className="py-20 bg-gray-900">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-4xl font-bold text-white mb-4">ABOUT <span className="text-red-600">POWERGYM</span></h2>
+          <h2 className="text-5xl md:text-5xl font-bold text-white mb-4">ABOUT <span className="text-red-600">POWERGYM</span></h2>
           <div className="w-20 h-1 bg-red-600 mx-auto mb-8"></div>
           <p className="text-gray-300 max-w-3xl mx-auto">
             We are more than just a gym - we're a community dedicated to helping you achieve your fitness goals and transform your life through expert guidance and support.
@@ -59,7 +59,7 @@ const About: React.FC = () => {
             <img 
               src="https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg" 
               alt="Gym interior" 
-              className="rounded-lg w-full object-cover h-[500px]"
+              className="rounded-lg w-full object-cover h-[500px] transition-all duration-300 hover:shadow-xl hover:shadow-red-1000/50 transform hover:scale-[1.02]"
             />
             <div className="absolute -bottom-8 -right-8 bg-red-600 p-6 rounded-lg hidden md:block">
               <div className="text-4xl font-bold text-white">5+</div>
