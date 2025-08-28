@@ -1,13 +1,8 @@
 import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Classes from './components/Classes';
-import Trainers from './components/Trainers';
-import Pricing from './components/Pricing';
-import Testimonials from './components/Testimonials';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
+import { Home, AboutPage, ClassesPage, TrainersPage, PricingPage, ContactPage, NotFound } from './pages';
 
 function App() {
   useEffect(() => {
@@ -15,17 +10,21 @@ function App() {
   }, []);
 
   return (
-    <div className="bg-black min-h-screen text-white">
-      <Navbar />
-      <Hero />
-      <About />
-      <Classes />
-      <Trainers />
-      <Pricing />
-      <Testimonials />
-      <Contact />
-      <Footer />
-    </div>
+    <Router>
+      <div className="bg-black min-h-screen text-white">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/classes" element={<ClassesPage />} />
+          <Route path="/trainers" element={<TrainersPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

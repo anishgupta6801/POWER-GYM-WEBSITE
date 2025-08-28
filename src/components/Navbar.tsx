@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, User, Mail, Phone, Calendar, CheckCircle } from 'lucide-react';
 
 // Free Trial Form Modal Component
@@ -610,31 +611,60 @@ const MembershipForm: React.FC<MembershipFormProps> = ({ isOpen, onClose }) => {
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeLink, setActiveLink] = useState('home');
   const [showMembershipForm, setShowMembershipForm] = useState(false);
   const [showFreeTrialForm, setShowFreeTrialForm] = useState(false);
+  const location = useLocation();
+
+  // Check if we're on the home page (which has all sections)
+  const isHomePage = location.pathname === '/';
+
+  // Get current route for active link highlighting
+  const getCurrentRoute = () => {
+    const path = location.pathname;
+    if (path === '/') return 'home';
+    if (path === '/about') return 'about';
+    if (path === '/classes') return 'classes';
+    if (path === '/trainers') return 'trainers';
+    if (path === '/pricing') return 'pricing';
+    if (path === '/contact') return 'contact';
+    return 'home';
+  };
+
+  const [activeLink, setActiveLink] = useState(getCurrentRoute());
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      // Update active link based on scroll position
-      const sections = document.querySelectorAll('section[id]');
-      sections.forEach(section => {
-        const htmlSection = section as HTMLElement;
-        const sectionTop = htmlSection.offsetTop - 100;
-        const sectionHeight = htmlSection.offsetHeight;
-        const sectionId = section.getAttribute('id') || '';
+      // If we're on home page, update active link based on scroll position
+      if (isHomePage) {
+        const sections = document.querySelectorAll('section[id]');
+        sections.forEach(section => {
+          const htmlSection = section as HTMLElement;
+          const sectionTop = htmlSection.offsetTop - 100;
+          const sectionHeight = htmlSection.offsetHeight;
+          const sectionId = section.getAttribute('id') || '';
 
-        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-          setActiveLink(sectionId);
-        }
-      });
+          if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+            setActiveLink(sectionId);
+          }
+        });
+      } else {
+        // For other pages, set active link based on route
+        const path = location.pathname;
+        if (path === '/') setActiveLink('home');
+        else if (path === '/about') setActiveLink('about');
+        else if (path === '/classes') setActiveLink('classes');
+        else if (path === '/trainers') setActiveLink('trainers');
+        else if (path === '/pricing') setActiveLink('pricing');
+        else if (path === '/contact') setActiveLink('contact');
+        else setActiveLink('home');
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isHomePage, location.pathname]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -668,12 +698,12 @@ const Navbar: React.FC = () => {
           <div className="hidden md:flex items-center">
             <div className="relative bg-black bg-opacity-40 backdrop-blur-sm rounded-full px-6 py-2 border border-red-900/30">
               <div className="flex space-x-1">
-                <NavLink href="#home" isActive={activeLink === 'home'}>HOME</NavLink>
-                <NavLink href="#about" isActive={activeLink === 'about'}>ABOUT</NavLink>
-                <NavLink href="#classes" isActive={activeLink === 'classes'}>ClASSES</NavLink>
-                <NavLink href="#trainers" isActive={activeLink === 'trainers'}>TRAINERS</NavLink>
-                <NavLink href="#pricing" isActive={activeLink === 'pricing'}>PRICING</NavLink>
-                <NavLink href="#contact" isActive={activeLink === 'contact'}>CONTACT</NavLink>
+                <NavLink to="/" isActive={activeLink === 'home'}>HOME</NavLink>
+                <NavLink to="/about" isActive={activeLink === 'about'}>ABOUT</NavLink>
+                <NavLink to="/classes" isActive={activeLink === 'classes'}>ClASSES</NavLink>
+                <NavLink to="/trainers" isActive={activeLink === 'trainers'}>TRAINERS</NavLink>
+                <NavLink to="/pricing" isActive={activeLink === 'pricing'}>PRICING</NavLink>
+                <NavLink to="/contact" isActive={activeLink === 'contact'}>CONTACT</NavLink>
               </div>
             </div>
           </div>
@@ -708,12 +738,12 @@ const Navbar: React.FC = () => {
         {isOpen && (
           <div className="md:hidden bg-gradient-to-b from-black to-red-950/95 backdrop-blur-sm absolute top-full left-0 w-full border-t border-red-900/30 shadow-[0_10px_20px_rgba(0,0,0,0.3)]">
             <div className="flex flex-col space-y-1 px-4 py-6">
-              <MobileNavLink href="#home" onClick={() => setIsOpen(false)} isActive={activeLink === 'home'}>Home</MobileNavLink>
-              <MobileNavLink href="#about" onClick={() => setIsOpen(false)} isActive={activeLink === 'about'}>About</MobileNavLink>
-              <MobileNavLink href="#classes" onClick={() => setIsOpen(false)} isActive={activeLink === 'classes'}>Classes</MobileNavLink>
-              <MobileNavLink href="#trainers" onClick={() => setIsOpen(false)} isActive={activeLink === 'trainers'}>Trainers</MobileNavLink>
-              <MobileNavLink href="#pricing" onClick={() => setIsOpen(false)} isActive={activeLink === 'pricing'}>Pricing</MobileNavLink>
-              <MobileNavLink href="#contact" onClick={() => setIsOpen(false)} isActive={activeLink === 'contact'}>Contact</MobileNavLink>
+              <MobileNavLink to="/" onClick={() => setIsOpen(false)} isActive={activeLink === 'home'}>Home</MobileNavLink>
+              <MobileNavLink to="/about" onClick={() => setIsOpen(false)} isActive={activeLink === 'about'}>About</MobileNavLink>
+              <MobileNavLink to="/classes" onClick={() => setIsOpen(false)} isActive={activeLink === 'classes'}>Classes</MobileNavLink>
+              <MobileNavLink to="/trainers" onClick={() => setIsOpen(false)} isActive={activeLink === 'trainers'}>Trainers</MobileNavLink>
+              <MobileNavLink to="/pricing" onClick={() => setIsOpen(false)} isActive={activeLink === 'pricing'}>Pricing</MobileNavLink>
+              <MobileNavLink to="/contact" onClick={() => setIsOpen(false)} isActive={activeLink === 'contact'}>Contact</MobileNavLink>
               <div className="pt-4 mt-2 border-t border-red-900/30">
                 <button
                   type="button"
@@ -750,10 +780,34 @@ const Navbar: React.FC = () => {
   );
 };
 
-const NavLink: React.FC<{ href: string, isActive: boolean, children: React.ReactNode }> = ({ href, isActive, children }) => {
+const NavLink: React.FC<{ to: string, isActive: boolean, children: React.ReactNode }> = ({ to, isActive, children }) => {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+  
+  // Determine section name from route
+  const getSectionFromRoute = (route: string) => {
+    if (route === '/') return 'home';
+    return route.replace('/', '');
+  };
+  
+  const section = getSectionFromRoute(to);
+  
+  const handleClick = (e: React.MouseEvent) => {
+    // If we're on the home page, handle scrolling for all sections including home
+    if (isHomePage) {
+      e.preventDefault();
+      const element = document.getElementById(section);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+    // Otherwise, let the Link component handle navigation to different pages
+  };
+  
   return (
-    <a
-      href={href}
+    <Link
+      to={to}
+      onClick={handleClick}
       className={`relative px-4 py-2 font-medium transition-all duration-300 rounded-full group ${
         isActive
           ? 'text-white bg-gradient-to-r from-red-700 to-red-900 shadow-md shadow-red-600/40'
@@ -761,15 +815,40 @@ const NavLink: React.FC<{ href: string, isActive: boolean, children: React.React
       }`}
     >
       <span className="relative z-10">{children}</span>
-    </a>
+    </Link>
   );
 };
 
-const MobileNavLink: React.FC<{ href: string, onClick: () => void, isActive: boolean, children: React.ReactNode }> = ({ href, onClick, isActive, children }) => {
+const MobileNavLink: React.FC<{ to: string, onClick: () => void, isActive: boolean, children: React.ReactNode }> = ({ to, onClick, isActive, children }) => {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+  
+  // Determine section name from route
+  const getSectionFromRoute = (route: string) => {
+    if (route === '/') return 'home';
+    return route.replace('/', '');
+  };
+  
+  const section = getSectionFromRoute(to);
+  
+  const handleClick = (e: React.MouseEvent) => {
+    onClick(); // Close mobile menu
+    
+    // If we're on the home page, handle scrolling for all sections including home
+    if (isHomePage) {
+      e.preventDefault();
+      const element = document.getElementById(section);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+    // Otherwise, let the Link component handle navigation to different pages
+  };
+  
   return (
-    <a
-      href={href}
-      onClick={onClick}
+    <Link
+      to={to}
+      onClick={handleClick}
       className={`relative px-4 py-3 font-medium transition-all duration-300 rounded-md flex items-center ${
         isActive
           ? 'text-white bg-gradient-to-r from-red-700 to-red-900 shadow-md shadow-red-600/40'
@@ -778,7 +857,7 @@ const MobileNavLink: React.FC<{ href: string, onClick: () => void, isActive: boo
     >
       {isActive && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1/2 bg-red-500 rounded-r-full"></span>}
       <span className="relative z-10">{children}</span>
-    </a>
+    </Link>
   );
 };
 

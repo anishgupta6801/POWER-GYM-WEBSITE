@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Play, X } from 'lucide-react';
 
 const Hero: React.FC = () => {
   const [showVideoModal, setShowVideoModal] = useState(false);
+  const navigate = useNavigate();
 
-  const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
+  const goToPricing = () => {
+    navigate('/pricing');
   };
 
   const openVideoModal = () => {
@@ -59,7 +55,7 @@ const Hero: React.FC = () => {
           
           <div className="flex flex-wrap gap-4">
             <button 
-              onClick={scrollToPricing}
+              onClick={goToPricing}
               className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-md font-bold text-lg transition duration-300"
             >
               GET STARTED
@@ -86,11 +82,15 @@ const Hero: React.FC = () => {
       </div>
       
       <div className="absolute bottom-0 left-0 right-0 flex justify-center">
-        <a href="#about" className="text-white animate-bounce mb-8" title="Scroll to About section">
+        <button 
+          onClick={() => navigate('/about')}
+          className="text-white animate-bounce mb-8" 
+          title="Go to About section"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-down">
             <path d="m6 9 6 6 6-6"/>
           </svg>
-        </a>
+        </button>
       </div>
 
       {/* YouTube Video Modal */}
